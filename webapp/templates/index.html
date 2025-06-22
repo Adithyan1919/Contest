@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MNIST Digit Viewer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+      padding: 30px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto 30px;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #444;
+      font-weight: bold;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .results {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .img-box {
+      background: #fff;
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease;
+      text-align: center;
+    }
+
+    .img-box:hover {
+      transform: scale(1.05);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      form {
+        padding: 20px;
+      }
+
+      .images {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 MNIST Digit Viewer</h1>
+
+  <form method="POST">
+    <label for="digit">Choose a Digit (0–9):</label>
+    <input type="number" name="digit" min="0" max="9" required placeholder="e.g., 3">
+
+    <label for="count">Number of Images to Show:</label>
+    <input type="number" name="count" min="1" max="20" required placeholder="e.g., 5">
+
+    <button type="submit">✨ Show Me the Digits!</button>
+  </form>
+
+  {% if images %}
+  <div class="results">
+    <h2 style="text-align:center; color:#333;">Showing Images for Digit {{ images[0].digit }}</h2>
+    <div class="images">
+      {% for img in images %}
+      <div class="img-box">
+        <img src="data:image/png;base64,{{ img.data }}" alt="Digit {{ img.digit }}">
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</body>
+</html>
